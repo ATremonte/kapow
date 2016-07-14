@@ -58,13 +58,7 @@ Then you can access the object like this:
 
 To print out type:
 	print("something");
-
-	or 
-
 	println("something");
-
-	or
-
 	print(ID);
 
 All lexemes can be printed, so everything has a print string associated with it.
