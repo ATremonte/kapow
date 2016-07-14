@@ -57,8 +57,8 @@ Then you can access the object like this:
 	n.key = 5;
 
 To print out type:
-	print("something");
-	println("something");
+	print("something");\n
+	println("something");\n
 	print(ID);
 
 All lexemes can be printed, so everything has a print string associated with it.
