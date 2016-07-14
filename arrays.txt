@@ -1,0 +1,16 @@
+
+// It would be easy to add more functionality to the arrays however I did not need them to do the other tasks.
+// This is a basic implementation of arrays, it has constant access and you can assign the individual indices as well.
+
+var a = array(10, 20, 30, 40);
+println(a);
+println(a[0]);
+println(a[2]);
+
+a[2] = 12345;
+
+a[3] = (* a[2] 3);
+
+println(a[2]);
+println(a[3]); 
+

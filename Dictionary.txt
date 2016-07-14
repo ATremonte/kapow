@@ -1,0 +1,260 @@
+println("This dictionary uses a red-black tree and hashes the key before inserting and retrieving.");
+
+
+var RED = "RED";
+var BLACK = "BLACK";
+
+def NilNode() {
+	var color = BLACK;
+	var key = null;
+	this;
+}
+
+def node(key, val) {
+	var left = NilNode();
+	var right = NilNode();
+	var color = RED;
+	var p = NilNode();
+	this;
+}
+
+def createTree() {
+	var newNode = NilNode();
+	newNode;
+}
+
+def printPreOrder(tree) {
+	println("KEY:COLOR");
+	def iter(T) {
+		print(T.key);
+		print(": ");
+		if (== T.color RED) println(BLACK);
+		else println(RED);
+		if (! (== T.left.key null))
+			iter(T.left);
+		if (! (== T.right.key null))
+			iter(T.right);
+	}
+	
+	print(tree.key);
+	print(": ");
+	println(tree.color);
+	if (! (== tree.left.key null))
+		iter(tree.left);
+	if (! (== tree.right.key null))
+		iter(tree.right);
+}
+
+def treeGet(tree, n) {
+	if (== tree.key null) {
+		node(-1, "Not in dictionary");
+	}
+	else if (== tree.key n) {
+		tree.val;
+	}
+	else {
+		if (< tree.key n) {
+			if (!(== tree.right.key null)) {
+				treeGet(tree.right, n);
+			}
+			else {
+				node(-1, "Not in dictionary");
+			}
+		}
+		else {
+			if (!(== tree.left.key null)) {
+				treeGet(tree.left, n);
+			}
+			else {
+				node(-1, "Not in dictionary");
+			}
+		}		
+	}
+}
+
+def treeInsert(tree, new) {
+	if (== tree.key null) {
+		tree = new;
+	}
+	else if (== tree.key new.key) {
+		// Do nothing..
+	}
+	else {
+		if (< tree.key new.key) {
+			if (!(== tree.right.key null)) {
+				tree.right = treeInsert(tree.right, new);
+			}
+			else {
+				new.p = tree;
+				tree.right = new;
+			}
+		}
+		else {
+			if (!(== tree.left.key null)) {
+				tree.left = treeInsert(tree.left, new);
+			}
+			else {
+				new.p = tree;
+				tree.left = new;
+			}
+		}
+	}
+	tree;
+}
+
+def leftRotate(T, x) {
+	if (! (== x.right.key null)) {
+		var y = x.right;
+		x.right = y.left;
+		if (! (== y.left.key null)) {
+			y.left.p = x;
+		}
+		y.p = x.p;
+		if (== x.p.key null) {
+			T = y;
+		}
+		else if (== x.key x.p.left.key) {
+			x.p.left = y;
+		}
+		else {
+			x.p.right = y;
+		}
+		y.left = x;
+		x.p = y;
+	}
+	T;
+}
+
+def rightRotate(T, x) {
+	if (! (== x.left.key null)) {
+		var y = x.left;
+		x.left = y.right;
+		if (! (== y.right.key null)) {
+			y.right.p = x;
+		}
+		y.p = x.p;
+		if (== x.p.key null) {
+			T = y;
+		}
+		else if (== x.key x.p.right.key) {
+			x.p.right = y;
+		}
+		else {
+			x.p.left = y;
+		}
+		y.right = x;
+		x.p = y;
+	}
+	T;
+}
+
+def rbInsert(tree, x) {
+	tree = treeInsert(tree, x);
+	x.color = RED;
+	while (and (! (== x.key tree.key)) (== x.p.color RED)) {
+		if (== x.p.key x.p.p.left.key) {
+			var y = x.p.p.right;
+			if (== y.color RED) {
+				x.p.color = BLACK;
+				y.color = BLACK;
+				x.p.p.color = RED;
+				x = x.p.p;
+			}
+			else {
+				if (== x.key x.p.right.key) {
+					x = x.p;
+					tree = leftRotate(tree, x);
+				}
+				x.p.color = BLACK;
+				x.p.p.color = RED;
+				tree = rightRotate(tree, x.p.p);
+			}
+		}
+		else {
+			var y = x.p.p.left;
+			if (== y.color RED) {
+				x.p.color = BLACK;
+				y.color = BLACK;
+				x.p.p.color = RED;
+				x = x.p.p;
+			}
+			else {
+				if (== x.key x.p.left.key) {
+					x = x.p;
+					tree = rightRotate(tree, x);
+				}
+				x.p.color = BLACK;
+				x.p.p.color = RED;
+				tree = leftRotate(tree, x.p.p);
+			}
+		}
+	}
+	tree.color = BLACK;
+	tree;
+}
+
+def Dictionary() {
+	var tree = createTree();
+	
+	def insert(key, val) {
+		var newNode = node(hash(key), val);
+		tree = rbInsert(tree, newNode);
+	}
+	
+	def get(key) {
+		treeGet(tree, hash(key));
+	}
+	
+	def printPO() {
+		printPreOrder(tree);
+	}
+	
+	this;
+}
+println("---Testing dictionary---");
+println("---I'm inserting nodes then displaying the tree in Pre-order---");
+var dict = Dictionary();
+dict.insert(5, "dog");
+dict.insert("yarn", "cat");
+dict.insert(20, "frog");
+dict.insert(1, "bull");
+dict.insert(2, "goat");
+dict.insert("moo", "cow");
+
+dict.printPO();
+println("This is a balanced tree so the access time would be O(logn) worst-case");
+println("");
+println("---Retrieving from dictionary using int and string for keys---");
+println(dict.get(2));		//goat
+println(dict.get("moo"));	//cow
+println(dict.get("yarn"));	//cat
+
+println("---Testing red-black tree without dictionary (prints pre-order)---");
+
+
+var tree = createTree();
+
+var n0 = node(15, "value");
+var n1 = node(1, "value");
+var n2 = node(6, "value");
+var n3 = node(23, "value");
+var n4 = node(54, "value");
+var n5 = node(14, "value");
+var n6 = node(2, "value");
+var n7 = node(3, "value");
+var n8 = node(4, "value");
+var n9 = node(32, "value");
+var n10 = node(10, "value");
+
+tree = rbInsert(tree, n0);
+tree = rbInsert(tree, n1);
+tree = rbInsert(tree, n2);
+tree = rbInsert(tree, n3);
+tree = rbInsert(tree, n4);
+tree = rbInsert(tree, n5);
+tree = rbInsert(tree, n6);
+tree = rbInsert(tree, n7);
+tree = rbInsert(tree, n8);
+tree = rbInsert(tree, n9);
+
+printPreOrder(tree);

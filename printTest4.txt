@@ -1,0 +1,68 @@
+/*
+var a = array(10, 20, 30, 40);
+
+var b = a[0];
+println(b);
+a[0] = 100;
+b = a[0];
+println(b);
+
+println(a[1]);
+//println(c);
+*/
+
+def node(x, y) {
+	var sum = (+ x y);
+	def add(z) {
+		println((+ sum z));
+	}
+	def subtract(z) {
+		println((- sum z));
+	}
+	this;	
+}
+
+var n = node(1, 2);
+println("HI");
+n.add(5);
+n.subtract(20);
+println(-4);
+var total = (+ -2 2);
+println(total);
+
+println(hash("hello"));
+
+println(hash(1234));
+
+
+def testfun(l) {
+	this;
+}
+
+//var t  = testfun((lambda() { println("action"); }));
+//t.l();
+//var lam = lambda() { println("action"); };
+//lam();
+
+def testTrue() {
+	var i = 2;
+	def add(x, y) {
+		println(+ x y);
+	}
+	testfun((lambda() {println(i); }));	
+	//this;
+}
+
+//println(testTrue());
+var a = 2;
+var b = 45;
+var c = testTrue();
+//println(c.l(23, 12));
+//c(a, b);
+
+
+
+
+
+
+

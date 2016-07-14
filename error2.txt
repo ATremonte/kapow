@@ -1,0 +1,4 @@
+def main() {
+	println("missing a close brace");
+
+main();

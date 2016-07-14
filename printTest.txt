@@ -1,0 +1,39 @@
+
+def add(x, y)
+{
+	println(x);
+	println(y);
+	println("+");
+	(+ x y);
+}
+
+def test(x)
+{
+	println("testing...");	
+	lambda(y) { (+ y x); }
+}
+
+/*
+var b = add(1, 2);
+//var b = (/ 3. 2);
+//println(b);
+print(b);
+*/
+
+var b = lambda(x) { println(x); };
+b("HI");
+println(b);
+//var c = add(2,25);
+println(add(30,25));
+
+var d = test(5);
+println(d(6));
+println("HEY YALL");
+
+var adam = 3;
+if (== adam 2)
+{
+	println("IN IF");
+}
+else 
+	println("IN ELSE");

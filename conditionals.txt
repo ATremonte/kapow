@@ -1,0 +1,72 @@
+
+def test1(x, y) {
+	println("---------prints value of conditional and its negation---------");
+	print("x: ");
+	print(x);
+	print(", y: ");
+	println(y);
+	println("(== x y)");
+	println((== x y));
+	println(! (== x y));
+	println("");
+	println("(< x y)");
+	println((< x y));
+	println(! (< x y));
+	println("");
+	println("(> x y)");
+	println((> x y));
+	println(! (> x y));
+}
+
+def test2() {
+	println("---------demonstrates if---------");
+	if (true) {
+		println("success");
+	}
+	else {
+		println("failure");
+	}
+
+	
+
+}
+
+def test3(x, y) {
+	println("---------demonstrates if and else---------");
+	if (! (== x y)) {
+		print(x);
+		print(" != ");
+		println(y);
+	}
+	else {
+		print(x);
+		print(" = ");
+		println(y);
+	}
+}
+
+def test4() {
+	println("---------demonstrates use of a statement instead of a block in the if/else---------");
+	if (true) println("success");
+	else println("failure");
+
+	if (false) println("failure");
+	else println("success");	
+
+}
+
+test1(1, 2);
+test1(2, 1);
+test1(1, 1);
+
+test2();
+
+test3(1, 2);
+test3(2, 1);
+test3(1, 1);
+
+test4();
+
+
+
+

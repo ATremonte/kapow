@@ -1,0 +1,53 @@
+// Here I am testing my comments!
+def abdasd()
+{
+	var a = 12;
+}
+/*
+
+
+Here
+I am
+
+
+
+
+typing random comments
+bleep bloop.
+
+
+
+*/
+def main(z, y)
+{
+	def add(x, z, func) // Demonstrates local functions and passing functions
+	{
+		return add(func(x),z);
+	}
+	def combine(ls)
+	{
+		
+	}
+	array.count(3,4,5).length(a, apple, add());
+	add();
+	add(1, z, lambda (param) {return (* param param);});
+	abdasd(z,y);
+	a = (1, 2, 3);
+	a = (+ 10 add(1,lambda (param) {return (* param param);}));
+	if (== a b)
+	{
+		while(true)
+		{
+			var a = b;
+		}
+		a = - b d;
+	}
+	a = (% (+ 2 (^ 3 (- z y))) 2);
+	var apple = 5;
+	var b = 5.; 
+	var banana = "laddle";
+	var john = 5.30;
+	var a = 0.2;
+	var d = 10.213;
+}
+

@@ -1,0 +1,4 @@
+def main() {
+	println("I have no semicolon")
+}
+main();

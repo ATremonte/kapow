@@ -1,0 +1,89 @@
+operation: operator primary primary
+
+numeric : INTEGER
+	| REAL
+	| ID
+
+list : primary
+     | primary COMMA list
+
+optList : *empty*
+	| list
+
+funcCall : ID OPAREN optList CPAREN
+
+expression : primary
+	   | primary operator expression
+
+operator : PLUS
+	 | TIMES
+	 | DIVIDE
+	 | MOD
+	 | MINUS
+	 | EXP
+	 | ISEQUAL
+	 | GREATERTHAN
+	 | LESSTHAN
+	 | AND
+	 | OR
+
+primary : ID
+	| STRING
+	| INT
+	| REAL
+	| OPAREN expression CPAREN
+	| funcCall
+	| funcDef
+	| numericOp
+	| NOT primary
+	| PRINT OPAREN optList CPAREN
+	| PRINTLN OPAREN optList CPAREN
+	| HASH OPAREN primary CPAREN
+	| TOSTRING OPAREN STRING CPAREN
+	| ARRAY OBRACK INTEGER CBRACK
+	| ARRAY OPAREN list CPAREN
+
+optStatementList : *empty*
+		 | statementList
+		 
+statementList : statement
+	| statement statementList
+
+statement : vardef SEMI
+	  | varset SEMI
+	  | whileLoop
+	  | expression SEMI
+	  | ifStatement
+	  | RETURN expression SEMI
+	  | funcdef
+
+varDef : type varset
+
+varSet : ID EQUALS expression
+
+block : OBRACE CBRACE
+	  | OBRACE optStatementList CBRACE
+
+funcDef : DEF ID OPAREN optList CPAREN block
+		| LAMBDA OPAREN optList CPAREN block
+
+type : INTEGER
+     | STRING
+     | REAL
+     | BOOLEAN
+
+optParamList : *empty*
+	     | list
+
+ifStatement : IF OPAREN expression CPAREN block optElse
+	    | IF OPAREN expression CPAREN statement optElse
+	    
+optElse : *empty*
+		| ELSE block
+		| ELSE statement
+
+whileLoop : WHILE OPAREN expression CPAREN block
+	  | WHILE OPAREN expression CPAREN statement
+
+
+

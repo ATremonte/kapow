@@ -1,0 +1,49 @@
+def test1(x, y) {
+	def test2() {
+		println((+ x y));	
+	}
+	this;
+}
+
+def node(value, next) {
+	this;
+}
+
+
+
+
+var a = test1(1, 2);
+
+println(a.x);
+var done = false;
+if (! done) {
+	println("WOW");
+
+}
+
+var n0 = node(0, null);
+var n1 = node(25, n0);
+
+println(n1.next.value);
+
+n1.next.value = 12;
+
+println(n1.next.value);
+
+if (== 1 2) {
+
+
+}
+else if (== 2 2) {
+	println("2 does in fact equal 2");
+
+}
+
+if (or (== 1 2) (== 2 2)) {
+	println("and works");
+}
+
+
+
+
+

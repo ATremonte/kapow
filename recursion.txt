@@ -1,0 +1,33 @@
+
+def test1(x) {
+	println("---This function has no use besides demonstrating recursion---");
+	def iter(y) {
+		if (== x y) {
+			y;
+		}	
+		else {
+			println(y);
+			iter((- y 1));
+		}
+	}
+	iter((+ x 10));
+}
+
+def halve(x) {
+	println("---This function halves a number without dividing by utilizing recursion---");
+	def iter(num, count) {
+		if (> count 0) {
+			iter((- num 0.5), (- count 1));
+		}
+		else {
+			num;
+		}	
+	}
+	iter(x, x);
+	
+}
+
+test1(5000);
+
+
+println(halve(25));

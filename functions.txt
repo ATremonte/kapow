@@ -1,0 +1,19 @@
+//If you would like to see more, the best implementation I have of functions being used as first-class objects is in
+//my implementation of the adder.
+
+def Node() {
+	var key = 0;
+	var value = null;
+	this;
+}
+
+def test(x, f) {
+	f(x);	
+}
+
+test(3, (lambda(y) { println((* y y)); }));
+
+var n = Node();
+println(n.key);
+n.value = (lambda() {println("lambda action");});
+n.value();

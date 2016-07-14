@@ -1,0 +1,53 @@
+def test(x)
+{
+	println(x);
+	if (> x 0)
+		test((- x 1));
+
+}
+
+def test2()
+{
+	println("Inside test2");
+}
+
+def node(value, next)
+{
+	this;
+}
+
+
+if (! (== 1 2))
+{
+	println("Not works");
+}
+
+
+
+
+//test(5);
+var n = node(1, null);
+var n2 = node(2, null);
+//node(0, n).next = n;
+if (< n.value n2.value)
+{
+	if (< n2.value n.value)
+		println("failure");
+	println("success");
+}
+
+n.value = 10;
+n.next = n2;
+var n3 = n.next;
+println(n3.value);
+
+test2();
+test2();
+
+if (false) println("hi");
+
+var h = null;
+println(h);
+
+if (== null null)
+	println("new type comparison");	

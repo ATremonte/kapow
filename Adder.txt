@@ -1,0 +1,307 @@
+
+def node(key, value) {
+	var right = null;
+	this;
+}
+
+def PRQ() {
+	var events = null;
+	var currentTime = 0;
+	var clock = 0;
+	var size = 0;
+	
+	def insert(skip, f) {
+		var when = (+ clock skip);
+		var n = node(when,f);
+		def iter(items) {
+			if (== items null) {
+				size = (+ size 1);
+				n;
+			}
+			else if (< when items.key) {
+				size = (+ size 1);
+				n.right = items;
+				n;
+			}
+			else {
+				items.right = iter(items.right);
+				items;
+			}
+		}
+		events = iter(events);
+	}
+	
+	def go() {
+		if (== events null) {
+			//Done
+		}
+		else {
+			var event = events;
+			events = events.right;
+			clock = event.key;
+			event.value();
+			size = (- size 1);
+			go();
+		}
+	}
+	
+	def item() {
+		events.value;
+	}
+	def remove() {
+		var itm = item();
+		events = events.right;
+		size = (- size 1);
+		itm;
+	}
+	def getSize() {
+		size;
+	}
+	def empty() {
+		(== size 0);
+	}
+	def rank() {
+		if (== size 0) {
+			clock;
+		}
+		else {
+			events.key;
+		}
+	}
+	
+	def peekTime() {
+		rank();
+	}
+	def peekFunction() {
+		item();
+	}
+	
+	
+	this;
+}
+
+def makeAgenda() {
+	PRQ();
+}
+var theAgenda = makeAgenda();
+
+def delay() {
+	theAgenda.rank();
+}
+
+def runAll(items) {
+	if (== items null) {
+		// done
+	}
+	else {
+		items.value();
+		runAll(items.right);
+	}
+}
+
+
+def wire() {
+	var signal = 0;
+	var endpoints = null;
+	
+	def get() {
+		signal;
+	}
+	def set(v) {
+		if (! (== v signal)) {
+			signal = v;
+			runAll(endpoints);
+		}
+	}
+	def add(f) {
+		//println("hello add");
+		var temp = node(0, f);
+		temp.right = endpoints;
+		endpoints = temp;
+		
+		f();
+	}
+	this;
+}
+
+def propagate() {
+	if (theAgenda.empty()) {
+		// done
+	}
+	else {
+		var itm = theAgenda.remove();
+		itm();
+		propagate();
+	}
+}
+
+var inverterDelay = 2;
+var andDelay = 3;
+var orDelay = 5;
+
+def andGate(in1, in2, out) {
+	def action() {
+		var inv1 = in1.get();
+		var inv2 = in2.get();
+		def act2() {
+			if (or (== inv1 0) (== inv2 0)) {
+				out.set(0);
+			}
+			else {
+				out.set(1);
+			}
+		
+		}
+		theAgenda.insert( (+ andDelay theAgenda.rank()), act2);
+	}
+	in1.add(action);
+	in2.add(action);
+}
+
+def orGate(in1, in2, out) {
+	def action() {
+		var inv1 = in1.get();
+		var inv2 = in2.get();
+		def act2() {
+			if (or (== inv1 1) (== inv2 1)) {
+				out.set(1);
+			}
+			else {
+				out.set(0);
+			}
+		
+		}
+		theAgenda.insert( (+ orDelay theAgenda.rank()), act2);
+	}
+	in1.add(action);
+	in2.add(action);
+}
+
+def inverter(in1, out) {
+	def action() {
+		var inv1 = in1.get();
+		def act2() {
+			if (== inv1 0) {
+				out.set(1);
+			}
+			else {
+				out.set(0);
+			}
+		
+		}
+		theAgenda.insert( (+ inverterDelay theAgenda.rank()), act2);
+	}
+	in1.add(action);
+}
+
+def halfAdder(in1, in2, s, c) {
+	var d = wire();
+	var e = wire();
+	orGate(in1, in2, d);
+	andGate(in1, in2, c);
+	inverter(c, e);
+	andGate(d, e, s);
+}
+
+def fullAdder(a, b, cin, sum, cout) {
+	var s = wire();
+	var c1 = wire();
+	var c2 = wire();
+	halfAdder(b, cin, s, c1);
+	halfAdder(a, s, sum, c2);
+	orGate(c1, c2, cout);
+}
+
+
+var in1 = wire();
+var in2 = wire();
+var in3 = wire();
+
+// ------in1-in3 are the input wires, change them accordingly.------
+in1.set(0);
+in2.set(0);
+in3.set(0);
+println("------");
+println("Inputs: ");
+print(in1.get());
+print(" ");
+print(in2.get());
+print(" ");
+println(in3.get());
+
+var s = wire();
+var co = wire();
+fullAdder(in1, in2, in3, s, co);
+propagate();
+
+println("Result:");
+print(co.get());
+print(" ");
+println(s.get());
+println("------");
+
+in1.set(0);
+in2.set(0);
+in3.set(1);
+
+println("Inputs: ");
+print(in1.get());
+print(" ");
+print(in2.get());
+print(" ");
+println(in3.get());
+
+var s = wire();
+var co = wire();
+fullAdder(in1, in2, in3, s, co);
+propagate();
+
+println("Result:");
+print(co.get());
+print(" ");
+println(s.get());
+println("------");
+
+in1.set(0);
+in2.set(1);
+in3.set(1);
+
+println("Inputs: ");
+print(in1.get());
+print(" ");
+print(in2.get());
+print(" ");
+println(in3.get());
+
+var s = wire();
+var co = wire();
+fullAdder(in1, in2, in3, s, co);
+propagate();
+
+println("Result:");
+print(co.get());
+print(" ");
+println(s.get());
+println("------");
+
+in1.set(1);
+in2.set(1);
+in3.set(1);
+
+println("Inputs: ");
+print(in1.get());
+print(" ");
+print(in2.get());
+print(" ");
+println(in3.get());
+
+var s = wire();
+var co = wire();
+fullAdder(in1, in2, in3, s, co);
+propagate();
+
+println("Result:");
+print(co.get());
+print(" ");
+println(s.get());
+println("------");
