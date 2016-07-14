@@ -1,3 +1,6 @@
+*All the .txt files are test files written in my language.*
+*These files will be better organized in the future, stay tuned.*
+
 How to run programs in my language:
 
 1.Run the make command ("make clean" then make for a clean build)
